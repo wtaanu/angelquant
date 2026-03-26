@@ -4,41 +4,37 @@
   "description": "Angel One SmartAPI algo trading — RSI + EMA strategy with circuit breaker",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "jest --testEnvironment node",
-    "test:watch": "jest --watch",
+    "start":         "node index.js",
+    "dev":           "nodemon index.js",
+    "server":        "node server/api.js",
+    "server:dev":    "nodemon server/api.js",
+    "test":          "jest --testEnvironment node",
+    "test:watch":    "jest --watch",
     "test:coverage": "jest --coverage",
-    "seed": "node scripts/seedTestData.js",
-    "backtest": "node scripts/backtest.js",
-    "download": "node scripts/downloadHistory.js",
-    "db:setup": "mysql -u root -p < src/db/schema.sql"
+    "test:offline":  "node run_tests.js",
+    "seed":          "node scripts/seedTestData.js",
+    "backtest":      "node scripts/backtest.js",
+    "optimize":      "node scripts/optimizeRSI.js",
+    "download":      "node scripts/downloadHistory.js",
+    "db:setup":      "mysql -u root -p < src/db/schema.sql"
   },
-  "keywords": [
-    "trading",
-    "algotrading",
-    "angel-one",
-    "smartapi",
-    "rsi",
-    "ema"
-  ],
+  "keywords": ["trading","algotrading","angel-one","smartapi","rsi","ema"],
   "author": "wtaanu",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "mysql2": "^3.9.4",
-    "ws": "^8.17.0",
-    "axios": "^1.6.8",
-    "node-cron": "^3.0.3"
+    "axios":     "^1.6.8",
+    "dotenv":    "^16.4.5",
+    "express":   "^4.19.2",
+    "mysql2":    "^3.9.4",
+    "node-cron": "^3.0.3",
+    "ws":        "^8.17.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "jest":    "^29.7.0",
     "nodemon": "^3.1.0"
   },
   "jest": {
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ],
+    "testMatch": ["**/tests/**/*.test.js"],
     "coverageDirectory": "coverage"
   }
 }
