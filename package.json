@@ -8,6 +8,7 @@
     "dev":           "nodemon index.js",
     "server":        "node server/api.js",
     "server:dev":    "nodemon server/api.js",
+    "db:init":       "node scripts/setup_db.js",
     "test":          "jest --testEnvironment node",
     "test:watch":    "jest --watch",
     "test:coverage": "jest --coverage",
@@ -15,8 +16,7 @@
     "seed":          "node scripts/seedTestData.js",
     "backtest":      "node scripts/backtest.js",
     "optimize":      "node scripts/optimizeRSI.js",
-    "download":      "node scripts/downloadHistory.js",
-    "db:setup":      "mysql -u root -p < src/db/schema.sql"
+    "download":      "node scripts/downloadHistory.js"
   },
   "keywords": ["trading","algotrading","angel-one","smartapi","rsi","ema"],
   "author": "wtaanu",
