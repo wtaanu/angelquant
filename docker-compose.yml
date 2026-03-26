@@ -1,25 +1,27 @@
 version: '3.8'
 
 services:
+
   db:
     image: mysql:8.0
     container_name: angelquant_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: angelquant_db
-      MYSQL_USER: aquser
-      MYSQL_PASSWORD: aqpass123
+      MYSQL_DATABASE:      angelquant_db
+      MYSQL_USER:          aquser
+      MYSQL_PASSWORD:      aqpass123
       MYSQL_ROOT_PASSWORD: rootpass123
     ports:
       - "3306:3306"
     volumes:
-      - ./data:/var/lib/mysql
-      - ./src/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - db_data:/var/lib/mysql
+      - ./src/db/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "aquser", "-paqpass123"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 30s
 
   app:
     build: .
@@ -28,9 +30,22 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    env_file: .env
+    ports:
+      - "3000:3000"
     environment:
       DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: angelquant_db
+      DB_USER: aquser
+      DB_PASS: aqpass123
+      PORT:    3000
+    env_file:
+      - .env.example
     volumes:
       - .:/app
       - /app/node_modules
+    command: node server/api.js
+
+volumes:
+  db_data:
+    name: angelquant_db_data
